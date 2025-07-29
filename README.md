@@ -36,12 +36,9 @@ All components communicate over isolated ports and simulate a working SOC pipeli
 
 > ⚠️ _All attacks are **simulated** and meant for safe lab/demonstration use only._
 
----
-
-
 ## 🧱 System Architecture
 
-```text
+
 +-----------------+        +--------------------+       +-----------------+
 | soc-demo-contr  | -----> |  threat-detector   | --->  |  soc-dashboard  |
 | (Attack Sim)    |        | (Log Parsing &     |       | (Alert Display) |
