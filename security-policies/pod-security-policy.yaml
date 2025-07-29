@@ -1,0 +1,62 @@
+# Note: PodSecurityPolicy is deprecated in Kubernetes 1.21+ and removed in 1.25+
+# This file demonstrates Pod Security Standards which replaced PSP in modern Kubernetes
+
+# Pod Security Standards are configured at the namespace level (see namespace.yaml)
+# This ConfigMap contains security policy documentation and OPA Gatekeeper policies
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: security-policy-docs
+  namespace: security-soc
+data:
+  pod-security-standards.md: |
+    # Pod Security Standards Configuration
+    
+    This namespace enforces the "restricted" Pod Security Standard which:
+    
+    - Disallows privileged containers
+    - Requires containers to run as non-root
+    - Drops all capabilities
+    - Disallows host namespaces (hostNetwork, hostPID, hostIPC)
+    - Requires read-only root filesystem
+    - Restricts volume types
+    - Enforces seccomp and AppArmor profiles
+    
+    See: https://kubernetes.io/docs/concepts/security/pod-security-standards/
+  
+  gatekeeper-policies.yaml: |
+    # Example OPA Gatekeeper policies for additional security enforcement
+    # These would be applied separately if Gatekeeper is installed
+    
+    apiVersion: templates.gatekeeper.sh/v1beta1
+    kind: ConstraintTemplate
+    metadata:
+      name: k8srequiredsecuritycontext
+    spec:
+      crd:
+        spec:
+          names:
+            kind: K8sRequiredSecurityContext
+          validation:
+            properties:
+              runAsNonRoot:
+                type: boolean
+              readOnlyRootFilesystem:
+                type: boolean
+      targets:
+        - target: admission.k8s.gatekeeper.sh
+          rego: |
+            package k8srequiredsecuritycontext
+            
+            violation[{"msg": msg}] {
+              container := input.review.object.spec.containers[_]
+              not container.securityContext.runAsNonRoot
+              msg := "Container must run as non-root user"
+            }
+            
+            violation[{"msg": msg}] {
+              container := input.review.object.spec.containers[_]
+              not container.securityContext.readOnlyRootFilesystem
+              msg := "Container must have read-only root filesystem"
+            }
