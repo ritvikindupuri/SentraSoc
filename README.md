@@ -38,6 +38,7 @@ All components communicate over isolated ports and simulate a working SOC pipeli
 
 ---
 
+
 ## 🧱 System Architecture
 
 ```text
@@ -47,6 +48,8 @@ All components communicate over isolated ports and simulate a working SOC pipeli
 |                 |        |  Alert Generation) |       |                 |
 +-----------------+        +--------------------+       +-----------------+
             Docker Network / Shared Volumes / Port Bindings
+
+
 
 
 
