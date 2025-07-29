@@ -36,62 +36,14 @@ All components communicate over isolated ports and simulate a working SOC pipeli
 
 > ⚠️ _All attacks are **simulated** and meant for safe lab/demonstration use only._
 
+---
+
 ## 🧱 System Architecture
 
-
+```text
 +-----------------+        +--------------------+       +-----------------+
 | soc-demo-contr  | -----> |  threat-detector   | --->  |  soc-dashboard  |
 | (Attack Sim)    |        | (Log Parsing &     |       | (Alert Display) |
 |                 |        |  Alert Generation) |       |                 |
 +-----------------+        +--------------------+       +-----------------+
             Docker Network / Shared Volumes / Port Bindings
-
-
-
-
-
-
-🚀 How to Run Locally
-🔧 Prerequisites
-Docker installed: https://www.docker.com/products/docker-desktop
-
-🛠️ Build & Start Containers
-bash
-Copy
-Edit
-git clone https://github.com/your-username/sentra-soc.git
-cd sentra-soc
-docker-compose up --build
-🌐 Access the Dashboard
-Once all containers are running, open:
-
-arduino
-Copy
-Edit
-http://localhost:8080
-Replace 8080 with the mapped port if customized in docker-compose.yml.
-
-📂 Project Structure
-plaintext
-Copy
-Edit
-sentra-soc/
-├── docker-compose.yml
-├── threat-detector/
-│   └── detector.py
-├── soc-dashboard/
-│   └── dashboard.html
-├── soc-demo-contr/
-│   └── simulate_attacks.py
-└── README.md
-🌟 Future Enhancements
-🔒 Add authentication to the dashboard
-
-📤 Enable alert export (CSV, JSON, email)
-
-📊 Integrate with Prometheus/Grafana for container telemetry
-
-🔁 Add more attack simulations (e.g., brute-force, lateral movement)
-
-☁️ Optional cloud deployment (AWS/GCP-ready)
-
