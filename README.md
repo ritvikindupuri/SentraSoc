@@ -1,10 +1,10 @@
-# 🔒 SentraSOC
+#  SentraSOC
 
 **SentraSOC** is a containerized, simulated Security Operations Center (SOC) platform that detects real-time cyber threats mapped to the [MITRE ATT&CK framework](https://attack.mitre.org/). It is designed for hands-on learning, detection engineering, and cybersecurity demo environments using safely simulated attack traffic.
 
 ---
 
-## 📊 Project Overview
+##  Project Overview
 
 SentraSOC is composed of three modular Docker containers:
 - **threat-detector**: Monitors logs and behaviors to generate real-time alerts
@@ -15,17 +15,17 @@ All components communicate over isolated ports and simulate a working SOC pipeli
 
 ---
 
-## 🛡️ Key Features
+##  Key Features
 
-- ✅ **Real-Time Alerting** – Behavioral detection engine processes live log events
-- 🧠 **MITRE ATT&CK Mapping** – Each alert is tagged with corresponding TTPs (e.g., T1548, T1005)
-- 📈 **SOC Dashboard** – Displays alert severity, types (Behavioral, DNS), timestamps, and triage options
-- ⚙️ **Containerized Microservices** – Built with Docker for reproducibility and portability
-- 💡 **Educational Use** – Safe, offline environment ideal for blue team training or interviews
+-  **Real-Time Alerting** – Behavioral detection engine processes live log events
+-  **MITRE ATT&CK Mapping** – Each alert is tagged with corresponding TTPs (e.g., T1548, T1005)
+-  **SOC Dashboard** – Displays alert severity, types (Behavioral, DNS), timestamps, and triage options
+-  **Containerized Microservices** – Built with Docker for reproducibility and portability
+-  **Educational Use** – Safe, offline environment ideal for blue team training or interviews
 
 ---
 
-## 🧪 Simulated Threat Types
+##  Simulated Threat Types
 
 | Threat Type              | MITRE Technique | Description |
 |--------------------------|-----------------|-------------|
@@ -34,11 +34,11 @@ All components communicate over isolated ports and simulate a working SOC pipeli
 | Multi-Stage Attack Flow  | T1190 → T1005   | Shows progression from exploitation to data access |
 | Script Execution         | T1059           | Python and shell command triggers with anomalous behavior |
 
-> ⚠️ _All attacks are **simulated** and meant for safe lab/demonstration use only._
+>  _All attacks are **simulated** and meant for safe lab/demonstration use only._
 
 ---
 
-## 🧱 System Architecture
+##  System Architecture
 
 ```text
 +-----------------+        +--------------------+       +-----------------+
