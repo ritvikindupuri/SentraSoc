@@ -12,6 +12,51 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
+  name: allow-soc-dashboard-ingress
+  namespace: security-soc
+spec:
+  podSelector:
+    matchLabels:
+      app: soc-dashboard
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: ingress-nginx
+      podSelector:
+        matchLabels:
+          app.kubernetes.io/name: ingress-nginx
+    ports:
+    - protocol: TCP
+      port: 8080
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+      podSelector:
+        matchLabels:
+          k8s-app: kube-dns
+    ports:
+    - protocol: TCP
+      port: 53
+    - protocol: UDP
+      port: 53
+  - to:
+    - namespaceSelector: {}
+      podSelector:
+        matchLabels:
+          app: postgres
+    ports:
+    - protocol: TCP
+      port: 5432
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
   name: allow-threat-detector
   namespace: security-soc
 spec:
@@ -33,14 +78,31 @@ spec:
     - protocol: TCP
       port: 8080
   egress:
-  - to: []
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+      podSelector:
+        matchLabels:
+          k8s-app: kube-dns
     ports:
     - protocol: TCP
-      port: 443  # HTTPS to Kubernetes API
-    - protocol: TCP
-      port: 53   # DNS
+      port: 53
     - protocol: UDP
-      port: 53   # DNS
+      port: 53
+  - to:
+    - namespaceSelector: {}
+      podSelector:
+        matchLabels:
+          app: postgres
+    ports:
+    - protocol: TCP
+      port: 5432
+  - to:
+    - namespaceSelector: {}
+    ports:
+    - protocol: TCP
+      port: 443
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
